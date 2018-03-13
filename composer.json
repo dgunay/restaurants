@@ -1,0 +1,23 @@
+{
+    "name": "devin/restaurants",
+    "description": "Helps you choose a restaurant to go to.",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Devin Gunay",
+            "email": "devingunay@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "7",
+        "phpunit/dbunit": "^4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Restaurants\\" : "/src/",
+            "Restaurants\\Tests\\" : "/test/"
+        }
+    }
+}

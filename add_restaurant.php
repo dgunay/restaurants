@@ -1,9 +1,7 @@
 <?php declare (strict_types = 1);
 
-// connect to the db
+// connect to the db using PDO
 
-// prepare statement to add restaurant to list of restaurants if not already there
+// pass it to the RestaurantPicker
 
-// execute
-
-// let the caller know what happened
+// Let it do its thing

@@ -1,4 +1,10 @@
 <?php
+declare(strict_types = 1);
 
-// TODO: make a class that manages a DB of restaurants
-// TODO: use PDO to let any database backend work!
+namespace Restaurants;
+
+// TODO: do we need this class anymore?
+class RestaurantPicker 
+{
+	
+}
