@@ -5,8 +5,10 @@ namespace Restaurants\Tests;
 
 use Restaurants\RestaurantDatabase;
 
-// TODO: wrapper for in-memory SQLite db loaded from CSV, with a check for
-// proper format of the file
+/**
+ * A version of the RestaurantDatabase that lets you load from a CSV and dump
+ * all the rows in its database, to be used for testing purposes.
+ */
 class TestRestaurantDatabase extends RestaurantDatabase
 {
   // Fields that the CSV must have
@@ -16,6 +18,12 @@ class TestRestaurantDatabase extends RestaurantDatabase
     'type'          => 'TEXT',
   );
 
+  /**
+   * Loads a CSV file into the database.
+   *
+   * @param string $path Path to the CSV file.
+   * @return \PDO 
+   */
   public function load_csv(string $path){
     $fp_in = @fopen($path, 'r');
     if ($fp_in === false) {
@@ -61,6 +69,11 @@ class TestRestaurantDatabase extends RestaurantDatabase
     return $this->db;
   }
 
+  /**
+   * Dumps an indexed array of rows from the db.
+   *
+   * @return array
+   */
   public function get_all_rows() : array {
     $stmt = $this->db->query("SELECT * FROM restaurants;");
     return $stmt->fetchAll(\PDO::FETCH_NUM);

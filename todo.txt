@@ -1,0 +1,2 @@
+Add last visited to visit() function, have a column for
+"last visited" date

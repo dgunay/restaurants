@@ -66,6 +66,7 @@ final class DatabaseFunctionsTest extends TestCase
 
 
 	public function test_least_visited_restaurant() {
+		// TODO: create a test case for ties
     $least_visited = $this->db->least_visited_restaurant();
     $expected = 'Chipotle';
     
