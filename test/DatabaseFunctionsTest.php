@@ -15,7 +15,7 @@ final class DatabaseFunctionsTest extends TestCase
 
 	protected function setUp() {
 		$this->db = new TestRestaurantDatabase(new \PDO('sqlite::memory:'));
-		$this->db->load_csv(__DIR__ . '/test.csv');
+		$this->db->load_csv(__DIR__ . '/datasets/simple.csv');
 	}
 
 	protected function tearDown() {

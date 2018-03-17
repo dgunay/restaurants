@@ -80,8 +80,10 @@ class RestaurantDatabase
 
 	// TODO: function to purely randomly select a restaurant
 	public function random_restaurant() : string {
-		throw new \BadMethodCallException(__FUNCTION__ . ' not implemented.');
-		return null;
+		$query = "SELECT * FROM restaurants ORDER BY RANDOM() LIMIT 1";
+		$statement = $this->db->prepare($query);
+		$statement->execute();
+		return $statement->fetchColumn();
 	}
 
 	// TODO: function to semirandomly select a restaurant, weighted by visits
