@@ -11,11 +11,14 @@ class RestaurantDatabase
 	/** @var PDO The database */
 	protected $db;
 
-	public function __construct(\PDO $db) {
-		$this->db = $db;
+	protected $table_name;
 
+	public function __construct(\PDO $db, string $table_name = 'restaurants') {
+		$this->db = $db;
 		// Throw Exceptions when something goes wrong
 		$this->db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+		
+		$this->table_name = $table_name;
 	}
 
 	/**
@@ -30,13 +33,13 @@ class RestaurantDatabase
 	 */
 	public function visit(string $restaurant, string $type = '') : void {
 		// Is it already there?
-		$query = "SELECT COUNT(*) FROM restaurants WHERE name = ?;";
+		$query = "SELECT COUNT(*) FROM " . $this->table_name . " WHERE name = ?;";
 		$statement = $this->db->prepare($query);
 		$statement->execute([$restaurant]);
 		if ((int) $statement->fetchColumn() > 0) {
 			// increment times_visited for that restaurant
 			// TODO: maybe update with a "last visit" ?
-			$query = "UPDATE restaurants 
+			$query = "UPDATE " . $this->table_name . " 
 				SET times_visited = times_visited + 1
 				WHERE name = ?;
 			";
@@ -45,7 +48,7 @@ class RestaurantDatabase
 		}
 		else {
 			// create a new row
-			$query = "INSERT INTO restaurants VALUES(?, 1, ?);";
+			$query = "INSERT INTO " . $this->table_name . " VALUES(?, 1, ?);";
 			$statement = $this->db->prepare($query);
 			$statement->execute([$restaurant, $type]);
 		}
@@ -59,7 +62,7 @@ class RestaurantDatabase
 	 * @return string
 	 */
 	public function least_visited_restaurant() : string {
-		$query = "SELECT * FROM restaurants ORDER BY times_visited ASC";
+		$query = "SELECT * FROM " . $this->table_name . " ORDER BY times_visited ASC";
 		$statement = $this->db->prepare($query);
 		$statement->execute();
 		return $statement->fetchColumn();
@@ -73,7 +76,7 @@ class RestaurantDatabase
 	 * @return boolean Success
 	 */
 	public function remove(string $restaurant) : bool {
-		$query = "DELETE FROM restaurants WHERE name = ?;";
+		$query = "DELETE FROM " . $this->table_name . " WHERE name = ?;";
 		$statement = $this->db->prepare($query);
 		return $statement->execute([$restaurant]);
 	}
