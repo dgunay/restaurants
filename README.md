@@ -4,6 +4,16 @@ Helps you decide on a restaurant by maintaining a list of restaurants you like
 and how often you've visited them. It chooses your least-visited restaurant
 or selects one either totally randomly or semi randomly.
 
+## Setup
+
+You can use any DB you like, but the tests assume SQLite3, so that's recommended.
+
+You must have a table (name specified in your config.json, defaults to 
+`restaurants`) with the fields:
+ - `name` (TEXT): Chipotle, Olive Garden, etc
+ - `times_visited` (INTEGER): 5, 10, etc
+ - `type` (TEXT): mexican, italian, etc
+
 ## Testing
 
 Tests currently run on SQLite3 in-memory. The hope is with PDO you can use any 
