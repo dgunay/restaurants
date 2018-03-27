@@ -1,3 +1,5 @@
 /vendor/
 test.*
 *.db
+config.json
+composer.phar

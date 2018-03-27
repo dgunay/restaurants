@@ -44,7 +44,7 @@ class TestRestaurantDatabase extends RestaurantDatabase
       $sql_fields[] = $field . ' ' . $type;;
     }
 
-    $query = "CREATE TABLE restaurants(" . implode(', ', $sql_fields). ");";
+    $query = "CREATE TABLE " . $this->table_name . "(" . implode(', ', $sql_fields). ");";
     $this->db->exec($query);
 
     // load row-by-row into SQLite table with prepared PDO
@@ -54,7 +54,7 @@ class TestRestaurantDatabase extends RestaurantDatabase
     );
     // TODO: throw exception for problems w pdo
     $statement = $this->db->prepare(
-      "INSERT INTO restaurants VALUES({$placeholders});"
+      "INSERT INTO " . $this->table_name . " VALUES({$placeholders});"
     );
     while (($line = fgetcsv($fp_in)) !== false) {
       $statement->execute($line);
@@ -75,7 +75,7 @@ class TestRestaurantDatabase extends RestaurantDatabase
    * @return array
    */
   public function get_all_rows() : array {
-    $stmt = $this->db->query("SELECT * FROM restaurants;");
+    $stmt = $this->db->query("SELECT * FROM " . $this->table_name . ";");
     return $stmt->fetchAll(\PDO::FETCH_NUM);
   }
 }
