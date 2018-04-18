@@ -11,10 +11,12 @@ class RestaurantDatabase
 	/** @var PDO The database */
 	protected $db;
 
+	/** @var string */
 	protected $table_name;
 
 	public function __construct(\PDO $db, string $table_name = 'restaurants') {
 		$this->db = $db;
+
 		// Throw Exceptions when something goes wrong
 		$this->db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 		
@@ -28,7 +30,8 @@ class RestaurantDatabase
 	 *
 	 * @throws PDOException if any SQL operations fail.
 	 * @param string $restaurant The name of the restaurant to visit
-	 * @param string $type Defaults to empty string for new restaurants.
+	 * @param string $type Defaults to empty string for new restaurants. Does not
+	 * change the type if the restaurant already exists.
 	 * @return void
 	 */
 	public function visit(string $restaurant, string $type = '') : void {
@@ -81,7 +84,11 @@ class RestaurantDatabase
 		return $statement->execute([$restaurant]);
 	}
 
-	// TODO: function to purely randomly select a restaurant
+	/**
+	 * Returns a random restaurant in the database.
+	 *
+	 * @return string
+	 */
 	public function random_restaurant() : string {
 		$query = "SELECT * FROM restaurants ORDER BY RANDOM() LIMIT 1";
 		$statement = $this->db->prepare($query);
@@ -91,7 +98,7 @@ class RestaurantDatabase
 
 	// TODO: function to semirandomly select a restaurant, weighted by visits
 	// (less visited restaurants more likely to come up)
-	public function semirandom_restaurant() : string {
+	public function suggest_restaurant() : string {
 		throw new \BadMethodCallException(__FUNCTION__ . ' not implemented.');
 		return null;
 	}
